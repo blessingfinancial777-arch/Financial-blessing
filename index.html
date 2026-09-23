@@ -1,245 +1,341 @@
-```html
+
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial blessings</title>
+    <title>Trading & Financial Wallet Tracker</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0b0f19; color: #f3f4f6; }
-        .tab-content { display: none; }
-        .tab-content.active { display: flex; }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 </head>
-<body class="min-h-screen flex flex-col bg-[#0b0f19] text-slate-100 pb-16">
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased">
 
-    <header class="bg-[#111827] border-b border-slate-800 sticky top-0 z-50 px-4 py-3 shadow-md">
-        <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
-            <div class="flex items-center gap-2">
-                <div class="bg-emerald-500/10 border border-emerald-500/20 p-2 rounded-xl text-emerald-400 font-bold text-lg">📈</div>
+    <!-- Header -->
+    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-emerald-500/10 p-2.5 rounded-xl border border-emerald-500/20">
+                    <i class="fa-solid fa-chart-line text-emerald-400 text-xl"></i>
+                </div>
                 <div>
-                    <h1 class="text-base font-bold tracking-tight text-white" data-i18n="app_title">Financial blessings</h1>
-                    <p class="text-xs text-slate-400" data-i18n="app_subtitle">Sistema Automatizado con Estilos Financieros Profesionales</p>
+                    <h1 class="text-xl font-bold tracking-tight text-white">Trading & Wallet System</h1>
+                    <p class="text-xs text-slate-400">Control de PnL y Distribución Financiera</p>
                 </div>
             </div>
-            <!-- Navigation Tabs & Menu -->
-            <div class="flex items-center gap-2">
-                <nav class="flex gap-1 bg-[#1f2937] p-1 rounded-xl border border-slate-700/50 text-xs font-medium">
-                    <button onclick="switchTab('dashboard')" id="btn-dashboard" class="px-3.5 py-1.5 rounded-lg transition bg-emerald-600 text-white shadow" data-i18n="tab_dashboard">Dashboard</button>
-                    <button onclick="switchTab('wallet')" id="btn-wallet" class="px-3.5 py-1.5 rounded-lg transition text-slate-300 hover:text-white" data-i18n="tab_wallet">Cartera</button>
-                </nav>
-                <!-- Hamburger / Options Menu Button -->
-                <div class="relative">
-                    <button onclick="toggleMenuDropdown()" class="bg-[#1f2937] hover:bg-[#374151] border border-slate-700 p-2 rounded-xl text-slate-300 hover:text-white transition cursor-pointer flex items-center justify-center">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                    </button>
-                    <!-- Dropdown Menu -->
-                    <div id="menu-dropdown" class="absolute right-0 mt-2.5 w-64 bg-[#111827] border border-slate-800 rounded-2xl shadow-2xl hidden z-50 py-2 flex flex-col">
-                        <button onclick="abrirModalTrading(); toggleMenuDropdown();" class="text-left px-4 py-2.5 text-xs text-slate-200 hover:bg-[#1f2937] transition flex items-center gap-2">
-                            <span>📈</span> <span data-i18n="menu_trading">Trading PnL & Operaciones</span>
-                        </button>
-                        <button onclick="abrirModalEstiloVida(); toggleMenuDropdown();" class="text-left px-4 py-2.5 text-xs text-slate-200 hover:bg-[#1f2937] transition flex items-center gap-2">
-                            <span>✨</span> <span data-i18n="menu_lifestyle">Elegir Estilo de Vida Financiero</span>
-                        </button>
-                        <div class="border-t border-slate-800 my-1"></div>
-                        <!-- Language Selector Inside Hamburger -->
-                        <div class="px-4 py-1.5">
-                            <span class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold block mb-1" data-i18n="menu_language">Idioma</span>
-                            <div class="grid grid-cols-3 gap-1">
-                                <button onclick="cambiarIdioma('es'); toggleMenuDropdown();" id="lang-btn-es" class="py-1 px-2 rounded text-[11px] font-bold transition bg-emerald-600 text-white">ESP</button>
-                                <button onclick="cambiarIdioma('pt'); toggleMenuDropdown();" id="lang-btn-pt" class="py-1 px-2 rounded text-[11px] font-bold transition bg-[#1f2937] text-slate-300 hover:text-white">POR</button>
-                                <button onclick="cambiarIdioma('en'); toggleMenuDropdown();" id="lang-btn-en" class="py-1 px-2 rounded text-[11px] font-bold transition bg-[#1f2937] text-slate-300 hover:text-white">ENG</button>
-                            </div>
-                        </div>
-                        <div class="border-t border-slate-800 my-1"></div>
-                        <button onclick="abrirModalActualizar(); toggleMenuDropdown();" class="text-left px-4 py-2.5 text-xs text-slate-200 hover:bg-[#1f2937] transition flex items-center gap-2">
-                            <span>🔄</span> <span data-i18n="menu_sync">Actualizar / Sincronizar App</span>
-                        </button>
-                        <button onclick="reiniciarDatosApp(); toggleMenuDropdown();" class="text-left px-4 py-2.5 text-xs text-red-400 hover:bg-red-950/30 transition flex items-center gap-2">
-                            <span>🗑️</span> <span data-i18n="menu_reset">Restaurar Fábrica / Borrar Datos</span>
-                        </button>
-                    </div>
-                </div>
+            <!-- Pestañas de Navegación -->
+            <div class="flex bg-slate-950 p-1 rounded-xl border border-slate-800 text-sm">
+                <button onclick="switchTab('dashboard')" id="btn-dashboard" class="px-4 py-2 rounded-lg font-medium transition bg-emerald-500 text-slate-950 shadow">Resumen</button>
+                <button onclick="switchTab('trading')" id="btn-trading" class="px-4 py-2 rounded-lg font-medium transition text-slate-400 hover:text-white">Trading (PnL)</button>
+                <button onclick="switchTab('wallet')" id="btn-wallet" class="px-4 py-2 rounded-lg font-medium transition text-slate-400 hover:text-white">Cartera y Fondos</button>
             </div>
         </div>
     </header>
 
-    <main class="max-w-4xl w-full mx-auto p-4 sm:p-6 flex-1 flex flex-col gap-6 mt-3">
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-8">
 
-        <!-- DASHBOARD TAB -->
-        <div id="tab-dashboard" class="tab-content active flex-col gap-6">
-            <!-- Active Lifestyle Banner -->
-            <div class="bg-gradient-to-r from-emerald-950/40 via-[#111827] to-[#111827] border border-emerald-500/20 p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shadow-xl">
-                <div class="flex items-center gap-3.5">
-                    <div class="bg-emerald-500/10 border border-emerald-500/30 p-3.5 rounded-xl text-emerald-400 text-xl shadow-inner">💼</div>
+        <!-- ================= VISTA: DASHBOARD ================= -->
+        <div id="tab-dashboard" class="space-y-6">
+            <!-- Tarjetas Resumen -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Capital Total Cartera</p>
+                    <h3 id="lbl-total-wallet" class="text-2xl font-bold text-white mt-1">$0.00</h3>
+                    <span class="text-xs text-emerald-400 mt-2 inline-block"><i class="fa-solid fa-wallet"></i> Activo disponible</span>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Diezmo Acumulado (10%)</p>
+                    <h3 id="lbl-total-tithe" class="text-2xl font-bold text-amber-400 mt-1">$0.00</h3>
+                    <span class="text-xs text-slate-400 mt-2 inline-block">Obligatorio</span>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Ofrenda Acumulada (10%)</p>
+                    <h3 id="lbl-total-offering" class="text-2xl font-bold text-sky-400 mt-1">$0.00</h3>
+                    <span class="text-xs text-slate-400 mt-2 inline-block">Obligatorio</span>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">PnL Neto de Trading</p>
+                    <h3 id="lbl-total-pnl" class="text-2xl font-bold text-white mt-1">$0.00</h3>
+                    <span id="lbl-pnl-status" class="text-xs text-slate-400 mt-2 inline-block">Sin operaciones</span>
+                </div>
+            </div>
+
+            <!-- Panel de Distribución del 80% Restante -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                     <div>
-                        <span class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold" data-i18n="banner_strategy_label">Estrategia Financiera Activa</span>
-                        <h2 class="text-sm font-bold text-white mt-0.5" id="banner-lifestyle-name">Crecimiento Equilibrado</h2>
+                        <h2 class="text-lg font-bold text-white">Distribución del 80% Restante</h2>
+                        <p class="text-xs text-slate-400">Configura cómo se divide el porcentaje libre tras separar el 20% (Diezmo y Ofrenda).</p>
                     </div>
-                </div>
-                <div class="flex items-center gap-2.5 w-full sm:w-auto justify-end">
-                    <button onclick="abrirModalTrading()" class="bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/30 text-blue-300 font-semibold text-xs px-4 py-2.5 rounded-xl transition cursor-pointer shadow" data-i18n="btn_register_trading">Registrar Trading PnL</button>
-                    <button onclick="abrirModalEstiloVida()" class="bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/30 text-emerald-300 font-semibold text-xs px-4 py-2.5 rounded-xl transition cursor-pointer shadow" data-i18n="btn_lifestyle">Estilo de Vida</button>
-                </div>
-            </div>
-
-            <!-- Summary Capital Card -->
-            <div class="grid grid-cols-1 gap-6">
-                <div class="bg-[#111827] border border-slate-800 p-6 sm:p-7 rounded-2xl flex flex-col gap-3 shadow-xl hover:border-slate-700 transition">
-                    <span class="text-xs text-slate-400 uppercase font-semibold tracking-wide" data-i18n="card_total_capital">Capital Total</span>
-                    <span class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight" id="dash-total-capital">$0.00</span>
-                    <span class="text-[11px] text-emerald-400 mt-0.5 font-medium" data-i18n="card_total_desc">Suma total acumulada en todas las cuentas y bóvedas</span>
-                </div>
-            </div>
-
-            <!-- Quick Deposit / Manual Inflow Card -->
-            <div class="bg-[#111827] border border-slate-800 p-6 sm:p-7 rounded-2xl flex flex-col gap-4 shadow-xl">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-sm font-bold text-white uppercase tracking-wider" data-i18n="deposit_title">📥 Ingreso Manual de Capital / Ganancia</h2>
-                    <span class="text-xs text-slate-400 hidden sm:inline" data-i18n="deposit_subtitle">Distribución automática activa</span>
-                </div>
-                <div class="flex flex-col sm:flex-row gap-3.5">
-                    <input type="number" step="0.01" id="manual-amount" placeholder="Monto en USD ($)" class="flex-1 bg-[#1f2937] border border-slate-700 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-emerald-500 transition">
-                    <input type="text" id="manual-desc" placeholder="Descripción (Ej. Bono, Inyección de capital)" class="flex-1 bg-[#1f2937] border border-slate-700 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-emerald-500 transition">
-                    <button onclick="registrarIngresoManual()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm px-7 py-3 rounded-xl transition cursor-pointer shadow-lg shadow-emerald-900/20 active:scale-95" data-i18n="btn_deposit">Depositar</button>
-                </div>
-            </div>
-
-            <!-- Distribution Progress & Chart Section -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-1">
-                <div class="bg-[#111827] border border-slate-800 p-6 sm:p-7 rounded-2xl flex flex-col gap-5 shadow-xl">
-                    <h3 class="text-sm font-bold text-white uppercase tracking-wider" data-i18n="distribution_title">📊 Distribución del Capital</h3>
-                    <div class="flex flex-col gap-4.5" id="progress-bars-container">
-                        <!-- Dynamically populated -->
+                    <div class="flex items-center gap-2">
+                        <span id="lbl-config-status" class="text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">Suma: 100%</span>
                     </div>
                 </div>
 
-                <div class="bg-[#111827] border border-slate-800 p-6 sm:p-7 rounded-2xl flex flex-col justify-center items-center shadow-xl">
-                    <div class="w-full max-w-[260px] h-[260px]">
-                        <canvas id="distributionChart"></canvas>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Ahorro (%)</label>
+                        <input type="number" id="input-pct-savings" value="40" oninput="updatePercentages()" class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-white font-semibold focus:outline-none focus:border-emerald-500">
+                        <p id="val-amt-savings" class="text-sm font-bold text-emerald-400 mt-2">$0.00</p>
+                    </div>
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Gastos (%)</label>
+                        <input type="number" id="input-pct-expenses" value="30" oninput="updatePercentages()" class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-white font-semibold focus:outline-none focus:border-emerald-500">
+                        <p id="val-amt-expenses" class="text-sm font-bold text-sky-400 mt-2">$0.00</p>
+                    </div>
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Reinversión Trading (%)</label>
+                        <input type="number" id="input-pct-reinvest" value="30" oninput="updatePercentages()" class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-white font-semibold focus:outline-none focus:border-emerald-500">
+                        <p id="val-amt-reinvest" class="text-sm font-bold text-purple-400 mt-2">$0.00</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- WALLET TAB -->
-        <div id="tab-wallet" class="tab-content flex-col gap-6">
-            <div class="bg-[#111827] border border-slate-800 p-6 sm:p-7 rounded-2xl flex flex-col gap-5 shadow-xl">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-sm font-bold text-white uppercase tracking-wider" data-i18n="vaults_title">🏛️ Detalle de Bóvedas de la Cartera</h2>
-                    <button onclick="abrirModalEstiloVida()" class="text-xs text-emerald-400 hover:text-emerald-300 bg-emerald-950/40 border border-emerald-900/50 px-3 py-1.5 rounded-lg transition cursor-pointer" data-i18n="btn_choose_lifestyle">Elegir Estilo de Vida</button>
+        <!-- ================= VISTA: TRADING (PnL) ================= -->
+        <div id="tab-trading" class="hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Formulario Nueva Operación -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 h-fit">
+                    <h2 class="text-lg font-bold text-white mb-4">Registrar Operación (PnL)</h2>
+                    <form id="form-trade" onsubmit="addTrade(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Activo / Par</label>
+                            <input type="text" id="trade-asset" placeholder="Ej. EURUSD, BTC, Volatility 75" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Resultado</label>
+                            <select id="trade-type" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-emerald-500">
+                                <option value="PROFIT">Ganancia (Profit)</option>
+                                <option value="LOSS">Pérdida (Loss)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Monto ($)</label>
+                            <input type="number" step="0.01" id="trade-amount" placeholder="0.00" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-emerald-500">
+                        </div>
+                        <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold py-2.5 rounded-xl transition shadow-lg shadow-emerald-500/20">
+                            Registrar Operación
+                        </button>
+                    </form>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="vaults-grid-container">
-                    <!-- Dynamically populated vaults with individual expense/withdrawal buttons -->
+
+                <!-- Historial de Operaciones -->
+                <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-bold text-white">Historial de Operaciones</h2>
+                        <button onclick="clearTrades()" class="text-xs text-rose-400 hover:text-rose-300 transition">Borrar todo</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-950 text-slate-400 uppercase text-xs border-b border-slate-800">
+                                <tr>
+                                    <th class="p-3 rounded-l-lg">Fecha</th>
+                                    <th class="p-3">Activo</th>
+                                    <th class="p-3">Tipo</th>
+                                    <th class="p-3">Monto</th>
+                                    <th class="p-3 rounded-r-lg text-right">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="trades-table-body" class="divide-y divide-slate-800/50">
+                                <!-- Dinámico -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- ================= VISTA: CARTERA Y FONDOS ================= -->
+        <div id="tab-wallet" class="hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Depositar o Ajustar Capital Manual -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+                    <h2 class="text-lg font-bold text-white mb-2">Ingresar Fondos a la Cartera</h2>
+                    <p class="text-xs text-slate-400 mb-4">Agrega capital inicial o depósitos externos. Esto también aplicará la división automática del 20% (Diezmo y Ofrenda).</p>
+                    <form id="form-deposit" onsubmit="addDeposit(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Descripción / Fuente</label>
+                            <input type="text" id="deposit-desc" placeholder="Ej. Depósito inicial Binance / Cuenta de prueba" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Monto ($)</label>
+                            <input type="number" step="0.01" id="deposit-amount" placeholder="0.00" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-emerald-500">
+                        </div>
+                        <button type="submit" class="w-full bg-sky-500 hover:bg-sky-400 text-slate-950 font-semibold py-2.5 rounded-xl transition shadow-lg shadow-sky-500/20">
+                            Agregar Fondos
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Resumen de Desglose de Fondos -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <h2 class="text-lg font-bold text-white mb-4">Desglose General de Fondos</h2>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between p-3 bg-slate-950 rounded-xl border border-slate-800">
+                                <span class="text-slate-400">Total Ingresos Registrados:</span>
+                                <span id="wallet-total-in" class="font-bold text-white">$0.00</span>
+                            </div>
+                            <div class="flex justify-between p-3 bg-slate-950 rounded-xl border border-slate-800">
+                                <span class="text-amber-400 font-medium">Diezmo Separado (10%):</span>
+                                <span id="wallet-total-tithe" class="font-bold text-amber-400">$0.00</span>
+                            </div>
+                            <div class="flex justify-between p-3 bg-slate-950 rounded-xl border border-slate-800">
+                                <span class="text-sky-400 font-medium">Ofrenda Separada (10%):</span>
+                                <span id="wallet-total-offering" class="font-bold text-sky-400">$0.00</span>
+                            </div>
+                            <div class="flex justify-between p-3 bg-slate-950 rounded-xl border border-slate-800">
+                                <span class="text-emerald-400 font-medium">Restante Libre (80%):</span>
+                                <span id="wallet-total-remaining" class="font-bold text-emerald-400">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="resetAllData()" class="mt-6 w-full border border-rose-500/30 hover:bg-rose-500/10 text-rose-400 text-xs py-2 rounded-xl transition">
+                        Restablecer todos los datos
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </main>
 
-    <!-- TRADING MODAL -->
-    <div id="modal-trading" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-[#111827] border border-slate-800 max-w-2xl w-full p-6 sm:p-7 rounded-3xl shadow-2xl flex flex-col gap-5 max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center">
-                <h3 class="text-base font-bold text-white flex items-center gap-2"><span>📈</span> <span data-i18n="modal_trading_title">Trading PnL & Historial de Operaciones</span></h3>
-                <button onclick="cerrarModalTrading()" class="text-slate-400 hover:text-white text-lg font-bold px-2 cursor-pointer">×</button>
-            </div>
-            
-            <!-- PnL Summary Header inside Trading Modal -->
-            <div class="bg-[#1f2937]/40 border border-slate-700/60 p-4 rounded-2xl flex items-center justify-between">
-                <div>
-                    <span class="text-xs text-slate-400 uppercase font-semibold" data-i18n="modal_net_pnl">PnL Neto Acumulado</span>
-                    <h4 class="text-2xl font-bold text-emerald-400 mt-0.5" id="modal-total-pnl">$0.00</h4>
-                </div>
-                <div class="text-right">
-                    <span class="text-xs text-slate-400 uppercase font-semibold" data-i18n="modal_trades_count">Operaciones</span>
-                    <h4 class="text-xl font-bold text-white mt-0.5" id="modal-trades-count">0</h4>
-                </div>
-            </div>
+    <!-- JavaScript de la App -->
+    <script>
+        // Estado Global de la App
+        let appData = {
+            walletTotal: 0,
+            totalTithe: 0,
+            totalOffering: 0,
+            totalPnl: 0,
+            trades: [],
+            deposits: [],
+            percentages: {
+                savings: 40,
+                expenses: 30,
+                reinvest: 30
+            }
+        };
 
-            <p class="text-xs text-slate-400" data-i18n="modal_trading_desc">
-                Registra tus operaciones de trading. Las ganancias inyectan fondos automáticamente a la cartera aplicando la distribución financiera.
-            </p>
+        // Cargar datos de localStorage si existen
+        function loadData() {
+            const saved = localStorage.getItem('trading_wallet_system');
+            if (saved) {
+                try {
+                    appData = JSON.parse(saved);
+                    document.getElementById('input-pct-savings').value = appData.percentages.savings;
+                    document.getElementById('input-pct-expenses').value = appData.percentages.expenses;
+                    document.getElementById('input-pct-reinvest').value = appData.percentages.reinvest;
+                } catch (e) {
+                    console.error("Error al cargar datos", e);
+                }
+            }
+            updateUI();
+        }
 
-            <form id="trade-form" onsubmit="registrarTrade(event)" class="bg-[#1f2937]/50 border border-slate-700/60 p-4 rounded-2xl grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                <div class="flex flex-col gap-1">
-                    <label class="text-xs text-slate-400" data-i18n="label_date">Fecha</label>
-                    <input type="date" id="trade-date" required class="bg-[#0b0f19] border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white outline-none focus:border-emerald-500">
-                </div>
-                <div class="flex flex-col gap-1">
-                    <label class="text-xs text-slate-400" data-i18n="label_asset">Activo / Par</label>
-                    <input type="text" id="trade-asset" placeholder="Ej. EURUSD, XAUUSD, BTC" required class="bg-[#0b0f19] border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white outline-none focus:border-emerald-500">
-                </div>
-                <div class="flex flex-col gap-1 sm:col-span-2">
-                    <label class="text-xs text-slate-400" data-i18n="label_pnl">Resultado (PnL $)</label>
-                    <input type="number" step="0.01" id="trade-pnl" placeholder="Ej. 250.00 o -60.00" required class="bg-[#0b0f19] border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white outline-none focus:border-emerald-500">
-                </div>
-                <div class="sm:col-span-2 flex justify-end">
-                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-6 py-2.5 rounded-xl transition cursor-pointer shadow-lg shadow-emerald-900/20 active:scale-95" data-i18n="btn_save_trade">Guardar Operación</button>
-                </div>
-            </form>
+        function saveData() {
+            localStorage.setItem('trading_wallet_system', JSON.stringify(appData));
+        }
 
-            <div class="flex flex-col gap-2.5">
-                <div class="flex justify-between items-center">
-                    <span class="text-xs font-bold text-slate-300 uppercase tracking-wider" data-i18n="history_title">Historial de Operaciones</span>
-                    <button onclick="limpiarHistorialTrades()" class="text-xs text-red-400 hover:text-red-300 bg-red-950/30 border border-red-900/40 px-3 py-1.5 rounded-lg transition cursor-pointer" data-i18n="btn_clear_history">Borrar Historial</button>
-                </div>
-                <div class="overflow-x-auto max-h-60">
-                    <table class="w-full text-left border-collapse text-xs">
-                        <thead>
-                            <tr class="border-b border-slate-800 text-[11px] text-slate-400 uppercase">
-                                <th class="p-2.5" data-i18n="th_date">Fecha</th>
-                                <th class="p-2.5" data-i18n="th_asset">Activo</th>
-                                <th class="p-2.5" data-i18n="th_pnl">PnL Neto</th>
-                                <th class="p-2.5 text-right" data-i18n="th_action">Acción</th>
-                            </tr>
-                        </thead>
-                        <tbody id="trades-table-body" class="divide-y divide-slate-800/60">
-                            <!-- Rows inserted dynamically -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        // Navegación por pestañas
+        function switchTab(tabName) {
+            ['dashboard', 'trading', 'wallet'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                document.getElementById(`btn-${t}`).classList.remove('bg-emerald-500', 'text-slate-950', 'shadow');
+                document.getElementById(`btn-${t}`).classList.add('text-slate-400');
+            });
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            document.getElementById(`btn-${tabName}`).classList.add('bg-emerald-500', 'text-slate-950', 'shadow');
+            document.getElementById(`btn-${tabName}`).classList.remove('text-slate-400');
+        }
 
-            <div class="flex justify-end mt-2">
-                <button onclick="cerrarModalTrading()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold px-5 py-2.5 rounded-xl transition cursor-pointer" data-i18n="btn_close">Cerrar</button>
-            </div>
-        </div>
-    </div>
+        // Cambiar porcentajes
+        function updatePercentages() {
+            const s = parseFloat(document.getElementById('input-pct-savings').value) || 0;
+            const e = parseFloat(document.getElementById('input-pct-expenses').value) || 0;
+            const r = parseFloat(document.getElementById('input-pct-reinvest').value) || 0;
+            const total = s + e + r;
 
-    <!-- LIFESTYLE MODAL -->
-    <div id="modal-lifestyle" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-[#111827] border border-slate-800 max-w-xl w-full p-6 sm:p-7 rounded-3xl shadow-2xl flex flex-col gap-5 max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center">
-                <h3 class="text-base font-bold text-white flex items-center gap-2"><span>✨</span> <span data-i18n="modal_lifestyle_title">Elige tu Estilo de Vida Financiero</span></h3>
-                <button onclick="cerrarModalEstiloVida()" class="text-slate-400 hover:text-white text-lg font-bold px-2 cursor-pointer">×</button>
-            </div>
-            <p class="text-xs text-slate-400" data-i18n="modal_lifestyle_desc">
-                Selecciona tu modelo operativo. La reinversión está activa exclusivamente para empresarios.
-            </p>
+            const statusLbl = document.getElementById('lbl-config-status');
+            if (total === 100) {
+                statusLbl.textContent = "Suma: 100% (Correcto)";
+                statusLbl.className = "text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium";
+                appData.percentages = { savings: s, expenses: e, reinvest: r };
+                saveData();
+                updateUI();
+            } else {
+                statusLbl.textContent = `Suma: ${total}% (Debe ser 100%)`;
+                statusLbl.className = "text-xs px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 font-medium";
+            }
+        }
 
-            <div class="flex flex-col gap-3">
-                <!-- Preset Emprendedores y Empresarios -->
-                <div onclick="seleccionarPreset('empresario')" id="preset-card-empresario" class="cursor-pointer bg-[#1f2937]/40 border border-slate-700/60 p-4 rounded-2xl flex flex-col gap-1.5 transition hover:border-slate-500">
-                    <div class="flex justify-between items-center">
-                        <span class="font-bold text-sm text-white tracking-wide" data-i18n="preset_empresario_title">Emprendedores y Empresarios (Corporativo)</span>
-                        <span class="text-emerald-400 font-mono text-[11px] bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-900/40" data-i18n="preset_empresario_tag">Con Reinversión</span>
-                    </div>
-                    <p class="text-xs text-slate-400" data-i18n="preset_empresario_desc">Nómina Personal 30% | Gastos Propios 30% | Fondo Reserva 20% | Ahorro 10% | Reinversión 10%</p>
-                </div>
+        // Agregar Depósito (Aplica 20% obligatorio)
+        function addDeposit(e) {
+            e.preventDefault();
+            const desc = document.getElementById('deposit-desc').value;
+            const amount = parseFloat(document.getElementById('deposit-amount').value);
 
-                <!-- Preset Cristianismo / Fe -->
-                <div onclick="seleccionarPreset('cristiano')" id="preset-card-cristiano" class="cursor-pointer bg-[#1f2937]/40 border border-slate-700/60 p-4 rounded-2xl flex flex-col gap-1.5 transition hover:border-slate-500">
-                    <div class="flex justify-between items-center">
-                        <span class="font-bold text-sm text-white tracking-wide" data-i18n="preset_cristiano_title">Vida Cristiana de Fe</span>
-                        <span class="text-amber-400 font-mono text-[11px] bg-amber-950/50 px-2 py-0.5 rounded border border-amber-900/40" data-i18n="preset_cristiano_tag">Diezmo + Ofrenda + Honrar</span>
-                    </div>
-                    <p class="text-xs text-slate-400" data-i18n="preset_cristiano_desc">Diezmo 10% + Ofrenda 10% + Honrar 5% | Hogar 30% | Gastos Propios 15% | Ahorro 20% | Emergencia 10%</p>
-                </div>
+            if (amount <= 0) return;
 
-                <!-- Preset Equilibrado -->
-                <div onclick="seleccionarPreset('equilibrado')" id="preset-card-equilibrado" class="cursor-pointer bg-[#1f2937]/60 border-2 border-emerald-500 p-4 rounded-2xl flex flex-col gap-1.5 transition hover:border-emerald-400">
-                    <div class="flex justify-between items-center">
-                        <span class="font-bold text-sm text-white tracking-wide" data-i18n="
+            // Procesar 20% obligatorio (10% diezmo, 10% ofrenda)
+            const tithe = amount * 0.10;
+            const offering = amount * 0.10;
+
+            appData.walletTotal += amount;
+            appData.totalTithe += tithe;
+            appData.totalOffering += offering;
+
+            appData.deposits.unshift({
+                date: new Date().toLocaleDateString(),
+                desc,
+                amount
+            });
+
+            document.getElementById('form-deposit').reset();
+            saveData();
+            updateUI();
+            alert("¡Fondos agregados y distribución del 20% aplicada con éxito!");
+        }
+
+        // Agregar Operación de Trading
+        function addTrade(e) {
+            e.preventDefault();
+            const asset = document.getElementById('trade-asset').value;
+            const type = document.getElementById('trade-type').value;
+            const amount = parseFloat(document.getElementById('trade-amount').value);
+
+            if (amount <= 0) return;
+
+            let netChange = type === 'PROFIT' ? amount : -amount;
+
+            // Si es ganancia, aplicamos también la separación del 20% sobre esa ganancia neta positiva
+            if (type === 'PROFIT') {
+                const tithe = amount * 0.10;
+                const offering = amount * 0.10;
+                appData.totalTithe += tithe;
+                appData.totalOffering += offering;
+                appData.walletTotal += amount;
+            } else {
+                appData.walletTotal -= amount;
+            }
+
+            appData.totalPnl += netChange;
+
+            appData.trades.unshift({
+                date: new Date().toLocaleDateString(),
+                asset,
+                type,
+                amount
+            });
+
+            document.getElementById('form-trade').reset();
+            saveData();
+            updateUI();
+        }
+
+        // Eliminar Operación individual
+        function deleteTrade(index) {
+            const trade = appData.trades[index];
+            if (trade.type === 'PROFIT') {
+                appData.totalTithe -= trade.amount * 0.10;
+                appData.tota
