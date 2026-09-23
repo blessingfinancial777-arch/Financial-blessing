@@ -1,312 +1,245 @@
+```html
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blessing Financial</title>
+    <title>Financial blessings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-        body {
-            background-color: #07090e;
-            color: #f8fafc;
-            padding: 10px;
-            display: flex;
-            justify-content: center;
-        }
-        .app-shell {
-            width: 100%;
-            max-width: 480px;
-            background-color: #0b0f17;
-            border-radius: 20px;
-            border: 1px solid #1a2234;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        .app-bar {
-            background-color: #111827;
-            padding: 14px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #1f293d;
-        }
-        .app-brand {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 15px;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-        }
-        .version-badge {
-            background-color: rgba(16, 185, 129, 0.15);
-            color: #10b981;
-            font-size: 10px;
-            font-weight: 600;
-            padding: 2px 6px;
-            border-radius: 6px;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-        .app-controls {
-            display: flex;
-            gap: 6px;
-        }
-        .pill-tag {
-            background-color: #1f293d;
-            color: #94a3b8;
-            font-size: 11px;
-            font-weight: 600;
-            padding: 4px 8px;
-            border-radius: 6px;
-        }
-        .app-content {
-            padding: 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            overflow-y: auto;
-        }
-        .metric-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-        .card {
-            background-color: #111827;
-            border-radius: 12px;
-            padding: 12px 14px;
-            border: 1px solid #1f293d;
-        }
-        .card-full {
-            background-color: #111827;
-            border-radius: 12px;
-            padding: 14px;
-            border: 1px solid #1f293d;
-        }
-        .label {
-            font-size: 11px;
-            color: #64748b;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .value {
-            font-size: 18px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-        .green { color: #10b981; }
-        .red { color: #ef4444; }
-        .blue { color: #3b82f6; }
-        .orange { color: #f59e0b; }
-        .input-group {
-            margin-top: 8px;
-        }
-        input {
-            width: 100%;
-            background-color: #07090e;
-            border: 1px solid #26334d;
-            border-radius: 8px;
-            padding: 10px 12px;
-            color: #fff;
-            font-size: 14px;
-            outline: none;
-        }
-        input:focus {
-            border-color: #10b981;
-        }
-        input::placeholder {
-            color: #475569;
-        }
-        .btn {
-            width: 100%;
-            border: none;
-            border-radius: 8px;
-            padding: 12px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 6px;
-        }
-        .btn-success {
-            background-color: #10b981;
-            color: #fff;
-        }
-        .btn-ai {
-            background-color: #2563eb;
-            color: #fff;
-        }
-        .btn:active {
-            opacity: 0.85;
-        }
-        .vault-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 8px;
-        }
-        .vault-box {
-            background-color: #07090e;
-            border: 1px solid #1a2234;
-            border-radius: 8px;
-            padding: 10px;
-        }
-        .vault-title {
-            font-size: 10px;
-            color: #64748b;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-        .vault-number {
-            font-size: 14px;
-            font-weight: 700;
-        }
-        .ai-panel {
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            background: linear-gradient(135deg, #111827 0%, #172033 100%);
-        }
-        #update-status {
-            margin-top: 8px;
-            font-size: 12px;
-            font-weight: 600;
-            text-align: center;
-            min-height: 18px;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0b0f19; color: #f3f4f6; }
+        .tab-content { display: none; }
+        .tab-content.active { display: flex; }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col bg-[#0b0f19] text-slate-100 pb-16">
 
-<div class="app-shell">
-    <div class="app-bar">
-        <div class="app-brand">
-            <span>Blessing Financial</span>
-            <!-- CAMBIA ESTO AQUÍ CUANDO HAGAMOS UNA NUEVA VERSIÓN (Ej: v3.2) -->
-            <span id="version-lbl" class="version-badge">v3.1</span>
+    <header class="bg-[#111827] border-b border-slate-800 sticky top-0 z-50 px-4 py-3 shadow-md">
+        <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
+            <div class="flex items-center gap-2">
+                <div class="bg-emerald-500/10 border border-emerald-500/20 p-2 rounded-xl text-emerald-400 font-bold text-lg">📈</div>
+                <div>
+                    <h1 class="text-base font-bold tracking-tight text-white" data-i18n="app_title">Financial blessings</h1>
+                    <p class="text-xs text-slate-400" data-i18n="app_subtitle">Sistema Automatizado con Estilos Financieros Profesionales</p>
+                </div>
+            </div>
+            <!-- Navigation Tabs & Menu -->
+            <div class="flex items-center gap-2">
+                <nav class="flex gap-1 bg-[#1f2937] p-1 rounded-xl border border-slate-700/50 text-xs font-medium">
+                    <button onclick="switchTab('dashboard')" id="btn-dashboard" class="px-3.5 py-1.5 rounded-lg transition bg-emerald-600 text-white shadow" data-i18n="tab_dashboard">Dashboard</button>
+                    <button onclick="switchTab('wallet')" id="btn-wallet" class="px-3.5 py-1.5 rounded-lg transition text-slate-300 hover:text-white" data-i18n="tab_wallet">Cartera</button>
+                </nav>
+                <!-- Hamburger / Options Menu Button -->
+                <div class="relative">
+                    <button onclick="toggleMenuDropdown()" class="bg-[#1f2937] hover:bg-[#374151] border border-slate-700 p-2 rounded-xl text-slate-300 hover:text-white transition cursor-pointer flex items-center justify-center">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                    <!-- Dropdown Menu -->
+                    <div id="menu-dropdown" class="absolute right-0 mt-2.5 w-64 bg-[#111827] border border-slate-800 rounded-2xl shadow-2xl hidden z-50 py-2 flex flex-col">
+                        <button onclick="abrirModalTrading(); toggleMenuDropdown();" class="text-left px-4 py-2.5 text-xs text-slate-200 hover:bg-[#1f2937] transition flex items-center gap-2">
+                            <span>📈</span> <span data-i18n="menu_trading">Trading PnL & Operaciones</span>
+                        </button>
+                        <button onclick="abrirModalEstiloVida(); toggleMenuDropdown();" class="text-left px-4 py-2.5 text-xs text-slate-200 hover:bg-[#1f2937] transition flex items-center gap-2">
+                            <span>✨</span> <span data-i18n="menu_lifestyle">Elegir Estilo de Vida Financiero</span>
+                        </button>
+                        <div class="border-t border-slate-800 my-1"></div>
+                        <!-- Language Selector Inside Hamburger -->
+                        <div class="px-4 py-1.5">
+                            <span class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold block mb-1" data-i18n="menu_language">Idioma</span>
+                            <div class="grid grid-cols-3 gap-1">
+                                <button onclick="cambiarIdioma('es'); toggleMenuDropdown();" id="lang-btn-es" class="py-1 px-2 rounded text-[11px] font-bold transition bg-emerald-600 text-white">ESP</button>
+                                <button onclick="cambiarIdioma('pt'); toggleMenuDropdown();" id="lang-btn-pt" class="py-1 px-2 rounded text-[11px] font-bold transition bg-[#1f2937] text-slate-300 hover:text-white">POR</button>
+                                <button onclick="cambiarIdioma('en'); toggleMenuDropdown();" id="lang-btn-en" class="py-1 px-2 rounded text-[11px] font-bold transition bg-[#1f2937] text-slate-300 hover:text-white">ENG</button>
+                            </div>
+                        </div>
+                        <div class="border-t border-slate-800 my-1"></div>
+                        <button onclick="abrirModalActualizar(); toggleMenuDropdown();" class="text-left px-4 py-2.5 text-xs text-slate-200 hover:bg-[#1f2937] transition flex items-center gap-2">
+                            <span>🔄</span> <span data-i18n="menu_sync">Actualizar / Sincronizar App</span>
+                        </button>
+                        <button onclick="reiniciarDatosApp(); toggleMenuDropdown();" class="text-left px-4 py-2.5 text-xs text-red-400 hover:bg-red-950/30 transition flex items-center gap-2">
+                            <span>🗑️</span> <span data-i18n="menu_reset">Restaurar Fábrica / Borrar Datos</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="app-controls">
-            <span class="pill-tag">🤖 AI</span>
-            <span class="pill-tag">ES</span>
+    </header>
+
+    <main class="max-w-4xl w-full mx-auto p-4 sm:p-6 flex-1 flex flex-col gap-6 mt-3">
+
+        <!-- DASHBOARD TAB -->
+        <div id="tab-dashboard" class="tab-content active flex-col gap-6">
+            <!-- Active Lifestyle Banner -->
+            <div class="bg-gradient-to-r from-emerald-950/40 via-[#111827] to-[#111827] border border-emerald-500/20 p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shadow-xl">
+                <div class="flex items-center gap-3.5">
+                    <div class="bg-emerald-500/10 border border-emerald-500/30 p-3.5 rounded-xl text-emerald-400 text-xl shadow-inner">💼</div>
+                    <div>
+                        <span class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold" data-i18n="banner_strategy_label">Estrategia Financiera Activa</span>
+                        <h2 class="text-sm font-bold text-white mt-0.5" id="banner-lifestyle-name">Crecimiento Equilibrado</h2>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2.5 w-full sm:w-auto justify-end">
+                    <button onclick="abrirModalTrading()" class="bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/30 text-blue-300 font-semibold text-xs px-4 py-2.5 rounded-xl transition cursor-pointer shadow" data-i18n="btn_register_trading">Registrar Trading PnL</button>
+                    <button onclick="abrirModalEstiloVida()" class="bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/30 text-emerald-300 font-semibold text-xs px-4 py-2.5 rounded-xl transition cursor-pointer shadow" data-i18n="btn_lifestyle">Estilo de Vida</button>
+                </div>
+            </div>
+
+            <!-- Summary Capital Card -->
+            <div class="grid grid-cols-1 gap-6">
+                <div class="bg-[#111827] border border-slate-800 p-6 sm:p-7 rounded-2xl flex flex-col gap-3 shadow-xl hover:border-slate-700 transition">
+                    <span class="text-xs text-slate-400 uppercase font-semibold tracking-wide" data-i18n="card_total_capital">Capital Total</span>
+                    <span class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight" id="dash-total-capital">$0.00</span>
+                    <span class="text-[11px] text-emerald-400 mt-0.5 font-medium" data-i18n="card_total_desc">Suma total acumulada en todas las cuentas y bóvedas</span>
+                </div>
+            </div>
+
+            <!-- Quick Deposit / Manual Inflow Card -->
+            <div class="bg-[#111827] border border-slate-800 p-6 sm:p-7 rounded-2xl flex flex-col gap-4 shadow-xl">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-sm font-bold text-white uppercase tracking-wider" data-i18n="deposit_title">📥 Ingreso Manual de Capital / Ganancia</h2>
+                    <span class="text-xs text-slate-400 hidden sm:inline" data-i18n="deposit_subtitle">Distribución automática activa</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3.5">
+                    <input type="number" step="0.01" id="manual-amount" placeholder="Monto en USD ($)" class="flex-1 bg-[#1f2937] border border-slate-700 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-emerald-500 transition">
+                    <input type="text" id="manual-desc" placeholder="Descripción (Ej. Bono, Inyección de capital)" class="flex-1 bg-[#1f2937] border border-slate-700 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-emerald-500 transition">
+                    <button onclick="registrarIngresoManual()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm px-7 py-3 rounded-xl transition cursor-pointer shadow-lg shadow-emerald-900/20 active:scale-95" data-i18n="btn_deposit">Depositar</button>
+                </div>
+            </div>
+
+            <!-- Distribution Progress & Chart Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-1">
+                <div class="bg-[#111827] border border-slate-800 p-6 sm:p-7 rounded-2xl flex flex-col gap-5 shadow-xl">
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wider" data-i18n="distribution_title">📊 Distribución del Capital</h3>
+                    <div class="flex flex-col gap-4.5" id="progress-bars-container">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+
+                <div class="bg-[#111827] border border-slate-800 p-6 sm:p-7 rounded-2xl flex flex-col justify-center items-center shadow-xl">
+                    <div class="w-full max-w-[260px] h-[260px]">
+                        <canvas id="distributionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WALLET TAB -->
+        <div id="tab-wallet" class="tab-content flex-col gap-6">
+            <div class="bg-[#111827] border border-slate-800 p-6 sm:p-7 rounded-2xl flex flex-col gap-5 shadow-xl">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-sm font-bold text-white uppercase tracking-wider" data-i18n="vaults_title">🏛️ Detalle de Bóvedas de la Cartera</h2>
+                    <button onclick="abrirModalEstiloVida()" class="text-xs text-emerald-400 hover:text-emerald-300 bg-emerald-950/40 border border-emerald-900/50 px-3 py-1.5 rounded-lg transition cursor-pointer" data-i18n="btn_choose_lifestyle">Elegir Estilo de Vida</button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="vaults-grid-container">
+                    <!-- Dynamically populated vaults with individual expense/withdrawal buttons -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- TRADING MODAL -->
+    <div id="modal-trading" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-[#111827] border border-slate-800 max-w-2xl w-full p-6 sm:p-7 rounded-3xl shadow-2xl flex flex-col gap-5 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center">
+                <h3 class="text-base font-bold text-white flex items-center gap-2"><span>📈</span> <span data-i18n="modal_trading_title">Trading PnL & Historial de Operaciones</span></h3>
+                <button onclick="cerrarModalTrading()" class="text-slate-400 hover:text-white text-lg font-bold px-2 cursor-pointer">×</button>
+            </div>
+            
+            <!-- PnL Summary Header inside Trading Modal -->
+            <div class="bg-[#1f2937]/40 border border-slate-700/60 p-4 rounded-2xl flex items-center justify-between">
+                <div>
+                    <span class="text-xs text-slate-400 uppercase font-semibold" data-i18n="modal_net_pnl">PnL Neto Acumulado</span>
+                    <h4 class="text-2xl font-bold text-emerald-400 mt-0.5" id="modal-total-pnl">$0.00</h4>
+                </div>
+                <div class="text-right">
+                    <span class="text-xs text-slate-400 uppercase font-semibold" data-i18n="modal_trades_count">Operaciones</span>
+                    <h4 class="text-xl font-bold text-white mt-0.5" id="modal-trades-count">0</h4>
+                </div>
+            </div>
+
+            <p class="text-xs text-slate-400" data-i18n="modal_trading_desc">
+                Registra tus operaciones de trading. Las ganancias inyectan fondos automáticamente a la cartera aplicando la distribución financiera.
+            </p>
+
+            <form id="trade-form" onsubmit="registrarTrade(event)" class="bg-[#1f2937]/50 border border-slate-700/60 p-4 rounded-2xl grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div class="flex flex-col gap-1">
+                    <label class="text-xs text-slate-400" data-i18n="label_date">Fecha</label>
+                    <input type="date" id="trade-date" required class="bg-[#0b0f19] border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white outline-none focus:border-emerald-500">
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label class="text-xs text-slate-400" data-i18n="label_asset">Activo / Par</label>
+                    <input type="text" id="trade-asset" placeholder="Ej. EURUSD, XAUUSD, BTC" required class="bg-[#0b0f19] border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white outline-none focus:border-emerald-500">
+                </div>
+                <div class="flex flex-col gap-1 sm:col-span-2">
+                    <label class="text-xs text-slate-400" data-i18n="label_pnl">Resultado (PnL $)</label>
+                    <input type="number" step="0.01" id="trade-pnl" placeholder="Ej. 250.00 o -60.00" required class="bg-[#0b0f19] border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white outline-none focus:border-emerald-500">
+                </div>
+                <div class="sm:col-span-2 flex justify-end">
+                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-6 py-2.5 rounded-xl transition cursor-pointer shadow-lg shadow-emerald-900/20 active:scale-95" data-i18n="btn_save_trade">Guardar Operación</button>
+                </div>
+            </form>
+
+            <div class="flex flex-col gap-2.5">
+                <div class="flex justify-between items-center">
+                    <span class="text-xs font-bold text-slate-300 uppercase tracking-wider" data-i18n="history_title">Historial de Operaciones</span>
+                    <button onclick="limpiarHistorialTrades()" class="text-xs text-red-400 hover:text-red-300 bg-red-950/30 border border-red-900/40 px-3 py-1.5 rounded-lg transition cursor-pointer" data-i18n="btn_clear_history">Borrar Historial</button>
+                </div>
+                <div class="overflow-x-auto max-h-60">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="border-b border-slate-800 text-[11px] text-slate-400 uppercase">
+                                <th class="p-2.5" data-i18n="th_date">Fecha</th>
+                                <th class="p-2.5" data-i18n="th_asset">Activo</th>
+                                <th class="p-2.5" data-i18n="th_pnl">PnL Neto</th>
+                                <th class="p-2.5 text-right" data-i18n="th_action">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="trades-table-body" class="divide-y divide-slate-800/60">
+                            <!-- Rows inserted dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="flex justify-end mt-2">
+                <button onclick="cerrarModalTrading()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold px-5 py-2.5 rounded-xl transition cursor-pointer" data-i18n="btn_close">Cerrar</button>
+            </div>
         </div>
     </div>
 
-    <div class="app-content">
-        <!-- Balance y Gasto (Inician en 0) -->
-        <div class="metric-row">
-            <div class="card">
-                <div class="label">Balance Total</div>
-                <div class="value" id="res-balance">$0.00</div>
+    <!-- LIFESTYLE MODAL -->
+    <div id="modal-lifestyle" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-[#111827] border border-slate-800 max-w-xl w-full p-6 sm:p-7 rounded-3xl shadow-2xl flex flex-col gap-5 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center">
+                <h3 class="text-base font-bold text-white flex items-center gap-2"><span>✨</span> <span data-i18n="modal_lifestyle_title">Elige tu Estilo de Vida Financiero</span></h3>
+                <button onclick="cerrarModalEstiloVida()" class="text-slate-400 hover:text-white text-lg font-bold px-2 cursor-pointer">×</button>
             </div>
-            <div class="card">
-                <div class="label">Gasto (20%) <span class="red">▼</span></div>
-                <div class="value red" id="res-gasto">$0.00</div>
-            </div>
-        </div>
+            <p class="text-xs text-slate-400" data-i18n="modal_lifestyle_desc">
+                Selecciona tu modelo operativo. La reinversión está activa exclusivamente para empresarios.
+            </p>
 
-        <!-- Ingresar Capital -->
-        <div class="card-full">
-            <div class="label">📥 Ingreso de Capital</div>
-            <div class="input-group">
-                <input type="number" id="input-monto" placeholder="Ej. 100.00">
-            </div>
-            <button class="btn btn-success" onclick="procesarIngreso()">Depositar y Distribuir</button>
-        </div>
+            <div class="flex flex-col gap-3">
+                <!-- Preset Emprendedores y Empresarios -->
+                <div onclick="seleccionarPreset('empresario')" id="preset-card-empresario" class="cursor-pointer bg-[#1f2937]/40 border border-slate-700/60 p-4 rounded-2xl flex flex-col gap-1.5 transition hover:border-slate-500">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-sm text-white tracking-wide" data-i18n="preset_empresario_title">Emprendedores y Empresarios (Corporativo)</span>
+                        <span class="text-emerald-400 font-mono text-[11px] bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-900/40" data-i18n="preset_empresario_tag">Con Reinversión</span>
+                    </div>
+                    <p class="text-xs text-slate-400" data-i18n="preset_empresario_desc">Nómina Personal 30% | Gastos Propios 30% | Fondo Reserva 20% | Ahorro 10% | Reinversión 10%</p>
+                </div>
 
-        <!-- Bóvedas Independientes -->
-        <div class="card-full">
-            <div class="label">⚖️ Bóvedas Independientes</div>
-            <div class="vault-grid">
-                <div class="vault-box">
-                    <div class="vault-title">🙏 DIEZMO (10%) <span class="orange">▲</span></div>
-                    <div class="vault-number orange" id="vault-diezmo">$0.00</div>
+                <!-- Preset Cristianismo / Fe -->
+                <div onclick="seleccionarPreset('cristiano')" id="preset-card-cristiano" class="cursor-pointer bg-[#1f2937]/40 border border-slate-700/60 p-4 rounded-2xl flex flex-col gap-1.5 transition hover:border-slate-500">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-sm text-white tracking-wide" data-i18n="preset_cristiano_title">Vida Cristiana de Fe</span>
+                        <span class="text-amber-400 font-mono text-[11px] bg-amber-950/50 px-2 py-0.5 rounded border border-amber-900/40" data-i18n="preset_cristiano_tag">Diezmo + Ofrenda + Honrar</span>
+                    </div>
+                    <p class="text-xs text-slate-400" data-i18n="preset_cristiano_desc">Diezmo 10% + Ofrenda 10% + Honrar 5% | Hogar 30% | Gastos Propios 15% | Ahorro 20% | Emergencia 10%</p>
                 </div>
-                <div class="vault-box">
-                    <div class="vault-title">🕊️ OFRENDA (10%) <span class="orange">▲</span></div>
-                    <div class="vault-number orange" id="vault-ofrenda">$0.00</div>
-                </div>
-                <div class="vault-box">
-                    <div class="vault-title">🛡️ AHORRO (40%) <span class="green">▲</span></div>
-                    <div class="vault-number green" id="vault-ahorro">$0.00</div>
-                </div>
-                <div class="vault-box">
-                    <div class="vault-title">🏠 HOGAR (20%) <span class="blue">▲</span></div>
-                    <div class="vault-number blue" id="vault-hogar">$0.00</div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Módulo de Trading (Eliécer) -->
-        <div class="card-full">
-            <div class="label">📈 Módulo de Trading</div>
-            <div style="font-size: 13px; display: flex; flex-direction: column; gap: 6px; margin-top: 6px; color: #cbd5e1;">
-                <div style="display: flex; justify-content: space-between;">
-                    <span style="color: #64748b;">Trader:</span> <strong>Eliécer</strong>
-                </div>
-                <div style="display: flex; justify-content: space-between;">
-                    <span style="color: #64748b;">Capital Inicial:</span> <strong>$8.00</strong>
-                </div>
-                <div style="display: flex; justify-content: space-between;">
-                    <span style="color: #64748b;">Capital Actual:</span> <strong class="green">$15.00 <span class="green">▲</span></strong>
-                </div>
-                <div style="display: flex; justify-content: space-between;">
-                    <span style="color: #64748b;">Efectividad:</span> <strong class="green">87.5% de éxito</strong>
-                </div>
-                <div style="display: flex; justify-content: space-between;">
-                    <span style="color: #64748b;">Tendencia Activo:</span> <strong class="green">▲ Alcista (En alza)</strong>
-                </div>
-            </div>
-        </div>
-
-        <!-- Botón de Actualización por IA (Limpio y directo) -->
-        <div class="card-full ai-panel">
-            <button class="btn btn-ai" onclick="aplicarActualizacionAI()">Actualizar Aplicación (v3.2)</button>
-            <div id="update-status"></div>
-        </div>
-    </div>
-</div>
-
-<script>
-    function procesarIngreso() {
-        let val = parseFloat(document.getElementById("input-monto").value);
-        if (isNaN(val) || val <= 0) {
-            alert("Ingresa un monto válido para procesar.");
-            return;
-        }
-
-        document.getElementById("res-balance").innerText = "$" + val.toFixed(2);
-        document.getElementById("res-gasto").innerText = "$" + (val * 0.20).toFixed(2);
-        document.getElementById("vault-diezmo").innerText = "$" + (val * 0.10).toFixed(2);
-        document.getElementById("vault-ofrenda").innerText = "$" + (val * 0.10).toFixed(2);
-        document.getElementById("vault-ahorro").innerText = "$" + (val * 0.40).toFixed(2);
-        document.getElementById("vault-hogar").innerText = "$" + (val * 0.20).toFixed(2);
-    }
-
-    function aplicarActualizacionAI() {
-        const statusBox = document.getElementById("update-status");
-        statusBox.style.color = "#60a5fa";
-        statusBox.innerText = "🤖 IA autorizando y aplicando nueva versión...";
-
-        setTimeout(() => {
-            // Esto recarga la página por completo trayendo los cambios actualizados del código
-            location.reload();
-        }, 1200);
-    }
-</script>
-
-</body>
-</html>
+                <!-- Preset Equilibrado -->
+                <div onclick="seleccionarPreset('equilibrado')" id="preset-card-equilibrado" class="cursor-pointer bg-[#1f2937]/60 border-2 border-emerald-500 p-4 rounded-2xl flex flex-col gap-1.5 transition hover:border-emerald-400">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-sm text-white tracking-wide" data-i18n="
