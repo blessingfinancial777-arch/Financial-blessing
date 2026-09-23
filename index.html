@@ -5,21 +5,205 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blessing Financial</title>
     <style>
-        body {
-            background-color: #07090e;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-        }
-        h1 {
-            color: #2563eb;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+        body { background-color: #0c0f17; color: #ffffff; padding: 15px; display: flex; flex-direction: column; gap: 12px; }
+        .header { display: flex; justify-content: space-between; align-items: center; background: #141824; padding: 12px 15px; border-radius: 10px; border: 1px solid #1e2638; }
+        .title { font-size: 16px; font-weight: bold; display: flex; align-items: center; gap: 8px; }
+        .badge-v { background: #134e38; color: #34d399; font-size: 11px; padding: 2px 6px; border-radius: 4px; }
+        .badge-ai { background: #1e293b; color: #94a3b8; font-size: 11px; padding: 2px 6px; border-radius: 4px; border: 1px solid #334155; }
+        
+        .card-row { display: flex; gap: 10px; }
+        .card { background: #141824; border: 1px solid #1e2638; border-radius: 10px; padding: 15px; flex: 1; }
+        .card-title { font-size: 11px; color: #94a3b8; margin-bottom: 5px; text-transform: uppercase; }
+        .card-value { font-size: 20px; font-weight: bold; }
+        .text-red { color: #f87171; }
+        
+        .section { background: #141824; border: 1px solid #1e2638; border-radius: 10px; padding: 15px; display: flex; flex-direction: column; gap: 10px; }
+        .section-title { font-size: 12px; color: #94a3b8; text-transform: uppercase; }
+        
+        .input-box { width: 100%; background: #0c0f17; border: 1px solid #2b3748; border-radius: 8px; padding: 12px; color: white; font-size: 16px; outline: none; }
+        .btn-green { background: #10b981; color: white; border: none; border-radius: 8px; padding: 12px; font-weight: bold; width: 100%; font-size: 14px; cursor: pointer; }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .vault { background: #0c0f17; border: 1px solid #1e2638; border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; }
+        .vault-name { font-size: 11px; color: #cbd5e1; }
+        .vault-val { font-size: 16px; font-weight: bold; color: #34d399; }
+        
+        .trading-row { display: flex; justify-content: space-between; font-size: 13px; color: #94a3b8; padding: 3px 0; }
+        .trading-val { color: #ffffff; font-weight: bold; }
+        .text-green { color: #34d399; }
+
+        .btn-blue { background: #2563eb; color: white; border: none; border-radius: 8px; padding: 12px; font-weight: bold; width: 100%; font-size: 14px; cursor: pointer; }
     </style>
 </head>
 <body>
-    <h1>Blessing Financial</h1>
-    <p>¡Aplicación sincronizada correctamente con la nube!</p>
-    <p>Aquí es donde verás todos tus botones y herramientas actualizados al instante.</p>
+
+    <div class="header">
+        <div class="title">Blessing Financial <span class="badge-v">v3.1</span></div>
+        <div style="display: flex; gap: 6px;">
+            <span class="badge-ai">🤖 AI Active</span>
+            <span class="badge-ai">ES</span>
+        </div>
+    </div>
+
+    <div class="card-row">
+        <div class="card">
+            <div class="card-title">Balance Total</div>
+            <div class="card-value">$8.00</div>
+        </div>
+        <div class="card">
+            <div class="card-title">Gasto (20%)</div>
+            <div class="card-value text-red">$1.60</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">🎂 Ingreso de Capital</div>
+        <input type="text" class="input-box" value="8.0">
+        <button class="btn-green">Depositar y Distribuir</button>
+    </div>
+
+    <div class="section">
+        <div class="section-title">⚖️ Bóvedas Independientes</div>
+        <div class="grid-2">
+            <div class="vault">
+                <span class="vault-name">⚠️ Diezmo (10%) ▲</span>
+                <span class="vault-val">$0.80</span>
+            </div>
+            <div class="vault">
+                <span class="vault-name">🕊️ Ofrenda (10%) ▲</span>
+                <span class="vault-val">$0.80</span>
+            </div>
+            <div class="vault">
+                <span class="vault-name">🛡️ Ahorro (40%) ▲</span>
+                <span class="vault-val">$3.20</span>
+            </div>
+            <div class="vault">
+                <span class="vault-name">🏠 Hogar (20%) ▲</span>
+                <span class="vault-val">$1.60</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">📈 Módulo de Trading</div>
+        <div class="trading-row"><span>Trader:</span> <span class="trading-val">Eliécer</span></div>
+        <div class="trading-row"><span>Capital Inicial:</span> <span class="trading-val">$8.00</span></div>
+        <div class="trading-row"><span>Capital Actual:</span> <span class="trading-val text-green">$15.00 ▲</span></div>
+        <div class="trading-row"><span>Efectividad:</span> <span class="trading-val">87.5% de éxito</span></div>
+        <div class="trading-row"><span>Tendencia Activo:</span> <span class="trading-val text-green">▲ Alcista (En alza)</span></div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">🤖 Control de Actualización AI</div>
+        <div style="font-size: 11px; color: #94a3b8;">La IA gestiona los permisos del sistema operativo y los parches de versión.</div>
+        <button class="btn-blue">Buscar Actualización (v3.2)</button>
+    </div>
+
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blessing Financial</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+        body { background-color: #0c0f17; color: #ffffff; padding: 15px; display: flex; flex-direction: column; gap: 12px; }
+        .header { display: flex; justify-content: space-between; align-items: center; background: #141824; padding: 12px 15px; border-radius: 10px; border: 1px solid #1e2638; }
+        .title { font-size: 16px; font-weight: bold; display: flex; align-items: center; gap: 8px; }
+        .badge-v { background: #134e38; color: #34d399; font-size: 11px; padding: 2px 6px; border-radius: 4px; }
+        .badge-ai { background: #1e293b; color: #94a3b8; font-size: 11px; padding: 2px 6px; border-radius: 4px; border: 1px solid #334155; }
+        
+        .card-row { display: flex; gap: 10px; }
+        .card { background: #141824; border: 1px solid #1e2638; border-radius: 10px; padding: 15px; flex: 1; }
+        .card-title { font-size: 11px; color: #94a3b8; margin-bottom: 5px; text-transform: uppercase; }
+        .card-value { font-size: 20px; font-weight: bold; }
+        .text-red { color: #f87171; }
+        
+        .section { background: #141824; border: 1px solid #1e2638; border-radius: 10px; padding: 15px; display: flex; flex-direction: column; gap: 10px; }
+        .section-title { font-size: 12px; color: #94a3b8; text-transform: uppercase; }
+        
+        .input-box { width: 100%; background: #0c0f17; border: 1px solid #2b3748; border-radius: 8px; padding: 12px; color: white; font-size: 16px; outline: none; }
+        .btn-green { background: #10b981; color: white; border: none; border-radius: 8px; padding: 12px; font-weight: bold; width: 100%; font-size: 14px; cursor: pointer; }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .vault { background: #0c0f17; border: 1px solid #1e2638; border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; }
+        .vault-name { font-size: 11px; color: #cbd5e1; }
+        .vault-val { font-size: 16px; font-weight: bold; color: #34d399; }
+        
+        .trading-row { display: flex; justify-content: space-between; font-size: 13px; color: #94a3b8; padding: 3px 0; }
+        .trading-val { color: #ffffff; font-weight: bold; }
+        .text-green { color: #34d399; }
+
+        .btn-blue { background: #2563eb; color: white; border: none; border-radius: 8px; padding: 12px; font-weight: bold; width: 100%; font-size: 14px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="title">Blessing Financial <span class="badge-v">v3.1</span></div>
+        <div style="display: flex; gap: 6px;">
+            <span class="badge-ai">🤖 AI Active</span>
+            <span class="badge-ai">ES</span>
+        </div>
+    </div>
+
+    <div class="card-row">
+        <div class="card">
+            <div class="card-title">Balance Total</div>
+            <div class="card-value">$8.00</div>
+        </div>
+        <div class="card">
+            <div class="card-title">Gasto (20%)</div>
+            <div class="card-value text-red">$1.60</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">🎂 Ingreso de Capital</div>
+        <input type="text" class="input-box" value="8.0">
+        <button class="btn-green">Depositar y Distribuir</button>
+    </div>
+
+    <div class="section">
+        <div class="section-title">⚖️ Bóvedas Independientes</div>
+        <div class="grid-2">
+            <div class="vault">
+                <span class="vault-name">⚠️ Diezmo (10%) ▲</span>
+                <span class="vault-val">$0.80</span>
+            </div>
+            <div class="vault">
+                <span class="vault-name">🕊️ Ofrenda (10%) ▲</span>
+                <span class="vault-val">$0.80</span>
+            </div>
+            <div class="vault">
+                <span class="vault-name">🛡️ Ahorro (40%) ▲</span>
+                <span class="vault-val">$3.20</span>
+            </div>
+            <div class="vault">
+                <span class="vault-name">🏠 Hogar (20%) ▲</span>
+                <span class="vault-val">$1.60</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">📈 Módulo de Trading</div>
+        <div class="trading-row"><span>Trader:</span> <span class="trading-val">Eliécer</span></div>
+        <div class="trading-row"><span>Capital Inicial:</span> <span class="trading-val">$8.00</span></div>
+        <div class="trading-row"><span>Capital Actual:</span> <span class="trading-val text-green">$15.00 ▲</span></div>
+        <div class="trading-row"><span>Efectividad:</span> <span class="trading-val">87.5% de éxito</span></div>
+        <div class="trading-row"><span>Tendencia Activo:</span> <span class="trading-val text-green">▲ Alcista (En alza)</span></div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">🤖 Control de Actualización AI</div>
+        <div style="font-size: 11px; color: #94a3b8;">La IA gestiona los permisos del sistema operativo y los parches de versión.</div>
+        <button class="btn-blue">Buscar Actualización (v3.2)</button>
+    </div>
+
+</body>
+</html>
+
