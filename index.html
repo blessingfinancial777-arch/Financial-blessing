@@ -5,205 +5,308 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blessing Financial</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-        body { background-color: #0c0f17; color: #ffffff; padding: 15px; display: flex; flex-direction: column; gap: 12px; }
-        .header { display: flex; justify-content: space-between; align-items: center; background: #141824; padding: 12px 15px; border-radius: 10px; border: 1px solid #1e2638; }
-        .title { font-size: 16px; font-weight: bold; display: flex; align-items: center; gap: 8px; }
-        .badge-v { background: #134e38; color: #34d399; font-size: 11px; padding: 2px 6px; border-radius: 4px; }
-        .badge-ai { background: #1e293b; color: #94a3b8; font-size: 11px; padding: 2px 6px; border-radius: 4px; border: 1px solid #334155; }
-        
-        .card-row { display: flex; gap: 10px; }
-        .card { background: #141824; border: 1px solid #1e2638; border-radius: 10px; padding: 15px; flex: 1; }
-        .card-title { font-size: 11px; color: #94a3b8; margin-bottom: 5px; text-transform: uppercase; }
-        .card-value { font-size: 20px; font-weight: bold; }
-        .text-red { color: #f87171; }
-        
-        .section { background: #141824; border: 1px solid #1e2638; border-radius: 10px; padding: 15px; display: flex; flex-direction: column; gap: 10px; }
-        .section-title { font-size: 12px; color: #94a3b8; text-transform: uppercase; }
-        
-        .input-box { width: 100%; background: #0c0f17; border: 1px solid #2b3748; border-radius: 8px; padding: 12px; color: white; font-size: 16px; outline: none; }
-        .btn-green { background: #10b981; color: white; border: none; border-radius: 8px; padding: 12px; font-weight: bold; width: 100%; font-size: 14px; cursor: pointer; }
-        
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .vault { background: #0c0f17; border: 1px solid #1e2638; border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; }
-        .vault-name { font-size: 11px; color: #cbd5e1; }
-        .vault-val { font-size: 16px; font-weight: bold; color: #34d399; }
-        
-        .trading-row { display: flex; justify-content: space-between; font-size: 13px; color: #94a3b8; padding: 3px 0; }
-        .trading-val { color: #ffffff; font-weight: bold; }
-        .text-green { color: #34d399; }
-
-        .btn-blue { background: #2563eb; color: white; border: none; border-radius: 8px; padding: 12px; font-weight: bold; width: 100%; font-size: 14px; cursor: pointer; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            background-color: #07090e;
+            color: #f8fafc;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+        .app-shell {
+            width: 100%;
+            max-width: 480px;
+            background-color: #0b0f17;
+            border-radius: 20px;
+            border: 1px solid #1a2234;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .app-bar {
+            background-color: #111827;
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #1f293d;
+        }
+        .app-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+        .version-badge {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 6px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        .app-controls {
+            display: flex;
+            gap: 6px;
+        }
+        .pill-tag {
+            background-color: #1f293d;
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+        .app-content {
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow-y: auto;
+        }
+        .metric-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .card {
+            background-color: #111827;
+            border-radius: 12px;
+            padding: 12px 14px;
+            border: 1px solid #1f293d;
+        }
+        .card-full {
+            background-color: #111827;
+            border-radius: 12px;
+            padding: 14px;
+            border: 1px solid #1f293d;
+        }
+        .label {
+            font-size: 11px;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .value {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .green { color: #10b981; }
+        .red { color: #ef4444; }
+        .blue { color: #3b82f6; }
+        .orange { color: #f59e0b; }
+        .input-group {
+            margin-top: 8px;
+        }
+        input {
+            width: 100%;
+            background-color: #07090e;
+            border: 1px solid #26334d;
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+        }
+        input:focus {
+            border-color: #10b981;
+        }
+        input::placeholder {
+            color: #475569;
+        }
+        .btn {
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-success {
+            background-color: #10b981;
+            color: #fff;
+        }
+        .btn-ai {
+            background-color: #2563eb;
+            color: #fff;
+        }
+        .btn:active {
+            opacity: 0.85;
+        }
+        .vault-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .vault-box {
+            background-color: #07090e;
+            border: 1px solid #1a2234;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        .vault-title {
+            font-size: 10px;
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        .vault-number {
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .ai-panel {
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            background: linear-gradient(135deg, #111827 0%, #172033 100%);
+        }
+        #update-status {
+            margin-top: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+            min-height: 18px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <div class="title">Blessing Financial <span class="badge-v">v3.1</span></div>
-        <div style="display: flex; gap: 6px;">
-            <span class="badge-ai">🤖 AI Active</span>
-            <span class="badge-ai">ES</span>
+<div class="app-shell">
+    <div class="app-bar">
+        <div class="app-brand">
+            <span>Blessing Financial</span>
+            <!-- CAMBIA ESTO AQUÍ CUANDO HAGAMOS UNA NUEVA VERSIÓN (Ej: v3.2) -->
+            <span id="version-lbl" class="version-badge">v3.1</span>
+        </div>
+        <div class="app-controls">
+            <span class="pill-tag">🤖 AI</span>
+            <span class="pill-tag">ES</span>
         </div>
     </div>
 
-    <div class="card-row">
-        <div class="card">
-            <div class="card-title">Balance Total</div>
-            <div class="card-value">$8.00</div>
-        </div>
-        <div class="card">
-            <div class="card-title">Gasto (20%)</div>
-            <div class="card-value text-red">$1.60</div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="section-title">🎂 Ingreso de Capital</div>
-        <input type="text" class="input-box" value="8.0">
-        <button class="btn-green">Depositar y Distribuir</button>
-    </div>
-
-    <div class="section">
-        <div class="section-title">⚖️ Bóvedas Independientes</div>
-        <div class="grid-2">
-            <div class="vault">
-                <span class="vault-name">⚠️ Diezmo (10%) ▲</span>
-                <span class="vault-val">$0.80</span>
+    <div class="app-content">
+        <!-- Balance y Gasto (Inician en 0) -->
+        <div class="metric-row">
+            <div class="card">
+                <div class="label">Balance Total</div>
+                <div class="value" id="res-balance">$0.00</div>
             </div>
-            <div class="vault">
-                <span class="vault-name">🕊️ Ofrenda (10%) ▲</span>
-                <span class="vault-val">$0.80</span>
-            </div>
-            <div class="vault">
-                <span class="vault-name">🛡️ Ahorro (40%) ▲</span>
-                <span class="vault-val">$3.20</span>
-            </div>
-            <div class="vault">
-                <span class="vault-name">🏠 Hogar (20%) ▲</span>
-                <span class="vault-val">$1.60</span>
+            <div class="card">
+                <div class="label">Gasto (20%) <span class="red">▼</span></div>
+                <div class="value red" id="res-gasto">$0.00</div>
             </div>
         </div>
-    </div>
 
-    <div class="section">
-        <div class="section-title">📈 Módulo de Trading</div>
-        <div class="trading-row"><span>Trader:</span> <span class="trading-val">Eliécer</span></div>
-        <div class="trading-row"><span>Capital Inicial:</span> <span class="trading-val">$8.00</span></div>
-        <div class="trading-row"><span>Capital Actual:</span> <span class="trading-val text-green">$15.00 ▲</span></div>
-        <div class="trading-row"><span>Efectividad:</span> <span class="trading-val">87.5% de éxito</span></div>
-        <div class="trading-row"><span>Tendencia Activo:</span> <span class="trading-val text-green">▲ Alcista (En alza)</span></div>
-    </div>
+        <!-- Ingresar Capital -->
+        <div class="card-full">
+            <div class="label">📥 Ingreso de Capital</div>
+            <div class="input-group">
+                <input type="number" id="input-monto" placeholder="Ej. 100.00">
+            </div>
+            <button class="btn btn-success" onclick="procesarIngreso()">Depositar y Distribuir</button>
+        </div>
 
-    <div class="section">
-        <div class="section-title">🤖 Control de Actualización AI</div>
-        <div style="font-size: 11px; color: #94a3b8;">La IA gestiona los permisos del sistema operativo y los parches de versión.</div>
-        <button class="btn-blue">Buscar Actualización (v3.2)</button>
+        <!-- Bóvedas Independientes -->
+        <div class="card-full">
+            <div class="label">⚖️ Bóvedas Independientes</div>
+            <div class="vault-grid">
+                <div class="vault-box">
+                    <div class="vault-title">🙏 DIEZMO (10%) <span class="orange">▲</span></div>
+                    <div class="vault-number orange" id="vault-diezmo">$0.00</div>
+                </div>
+                <div class="vault-box">
+                    <div class="vault-title">🕊️ OFRENDA (10%) <span class="orange">▲</span></div>
+                    <div class="vault-number orange" id="vault-ofrenda">$0.00</div>
+                </div>
+                <div class="vault-box">
+                    <div class="vault-title">🛡️ AHORRO (40%) <span class="green">▲</span></div>
+                    <div class="vault-number green" id="vault-ahorro">$0.00</div>
+                </div>
+                <div class="vault-box">
+                    <div class="vault-title">🏠 HOGAR (20%) <span class="blue">▲</span></div>
+                    <div class="vault-number blue" id="vault-hogar">$0.00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Módulo de Trading (Eliécer) -->
+        <div class="card-full">
+            <div class="label">📈 Módulo de Trading</div>
+            <div style="font-size: 13px; display: flex; flex-direction: column; gap: 6px; margin-top: 6px; color: #cbd5e1;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: #64748b;">Trader:</span> <strong>Eliécer</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: #64748b;">Capital Inicial:</span> <strong>$8.00</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: #64748b;">Capital Actual:</span> <strong class="green">$15.00 <span class="green">▲</span></strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: #64748b;">Efectividad:</span> <strong class="green">87.5% de éxito</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: #64748b;">Tendencia Activo:</span> <strong class="green">▲ Alcista (En alza)</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón de Actualización por IA (Limpio y directo) -->
+        <div class="card-full ai-panel">
+            <button class="btn btn-ai" onclick="aplicarActualizacionAI()">Actualizar Aplicación (v3.2)</button>
+            <div id="update-status"></div>
+        </div>
     </div>
+</div>
+
+<script>
+    function procesarIngreso() {
+        let val = parseFloat(document.getElementById("input-monto").value);
+        if (isNaN(val) || val <= 0) {
+            alert("Ingresa un monto válido para procesar.");
+            return;
+        }
+
+        document.getElementById("res-balance").innerText = "$" + val.toFixed(2);
+        document.getElementById("res-gasto").innerText = "$" + (val * 0.20).toFixed(2);
+        document.getElementById("vault-diezmo").innerText = "$" + (val * 0.10).toFixed(2);
+        document.getElementById("vault-ofrenda").innerText = "$" + (val * 0.10).toFixed(2);
+        document.getElementById("vault-ahorro").innerText = "$" + (val * 0.40).toFixed(2);
+        document.getElementById("vault-hogar").innerText = "$" + (val * 0.20).toFixed(2);
+    }
+
+    function aplicarActualizacionAI() {
+        const statusBox = document.getElementById("update-status");
+        statusBox.style.color = "#60a5fa";
+        statusBox.innerText = "🤖 IA autorizando y aplicando nueva versión...";
+
+        setTimeout(() => {
+            // Esto recarga la página por completo trayendo los cambios actualizados del código
+            location.reload();
+        }, 1200);
+    }
+</script>
 
 </body>
 </html>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blessing Financial</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-        body { background-color: #0c0f17; color: #ffffff; padding: 15px; display: flex; flex-direction: column; gap: 12px; }
-        .header { display: flex; justify-content: space-between; align-items: center; background: #141824; padding: 12px 15px; border-radius: 10px; border: 1px solid #1e2638; }
-        .title { font-size: 16px; font-weight: bold; display: flex; align-items: center; gap: 8px; }
-        .badge-v { background: #134e38; color: #34d399; font-size: 11px; padding: 2px 6px; border-radius: 4px; }
-        .badge-ai { background: #1e293b; color: #94a3b8; font-size: 11px; padding: 2px 6px; border-radius: 4px; border: 1px solid #334155; }
-        
-        .card-row { display: flex; gap: 10px; }
-        .card { background: #141824; border: 1px solid #1e2638; border-radius: 10px; padding: 15px; flex: 1; }
-        .card-title { font-size: 11px; color: #94a3b8; margin-bottom: 5px; text-transform: uppercase; }
-        .card-value { font-size: 20px; font-weight: bold; }
-        .text-red { color: #f87171; }
-        
-        .section { background: #141824; border: 1px solid #1e2638; border-radius: 10px; padding: 15px; display: flex; flex-direction: column; gap: 10px; }
-        .section-title { font-size: 12px; color: #94a3b8; text-transform: uppercase; }
-        
-        .input-box { width: 100%; background: #0c0f17; border: 1px solid #2b3748; border-radius: 8px; padding: 12px; color: white; font-size: 16px; outline: none; }
-        .btn-green { background: #10b981; color: white; border: none; border-radius: 8px; padding: 12px; font-weight: bold; width: 100%; font-size: 14px; cursor: pointer; }
-        
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .vault { background: #0c0f17; border: 1px solid #1e2638; border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; }
-        .vault-name { font-size: 11px; color: #cbd5e1; }
-        .vault-val { font-size: 16px; font-weight: bold; color: #34d399; }
-        
-        .trading-row { display: flex; justify-content: space-between; font-size: 13px; color: #94a3b8; padding: 3px 0; }
-        .trading-val { color: #ffffff; font-weight: bold; }
-        .text-green { color: #34d399; }
-
-        .btn-blue { background: #2563eb; color: white; border: none; border-radius: 8px; padding: 12px; font-weight: bold; width: 100%; font-size: 14px; cursor: pointer; }
-    </style>
-</head>
-<body>
-
-    <div class="header">
-        <div class="title">Blessing Financial <span class="badge-v">v3.1</span></div>
-        <div style="display: flex; gap: 6px;">
-            <span class="badge-ai">🤖 AI Active</span>
-            <span class="badge-ai">ES</span>
-        </div>
-    </div>
-
-    <div class="card-row">
-        <div class="card">
-            <div class="card-title">Balance Total</div>
-            <div class="card-value">$8.00</div>
-        </div>
-        <div class="card">
-            <div class="card-title">Gasto (20%)</div>
-            <div class="card-value text-red">$1.60</div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="section-title">🎂 Ingreso de Capital</div>
-        <input type="text" class="input-box" value="8.0">
-        <button class="btn-green">Depositar y Distribuir</button>
-    </div>
-
-    <div class="section">
-        <div class="section-title">⚖️ Bóvedas Independientes</div>
-        <div class="grid-2">
-            <div class="vault">
-                <span class="vault-name">⚠️ Diezmo (10%) ▲</span>
-                <span class="vault-val">$0.80</span>
-            </div>
-            <div class="vault">
-                <span class="vault-name">🕊️ Ofrenda (10%) ▲</span>
-                <span class="vault-val">$0.80</span>
-            </div>
-            <div class="vault">
-                <span class="vault-name">🛡️ Ahorro (40%) ▲</span>
-                <span class="vault-val">$3.20</span>
-            </div>
-            <div class="vault">
-                <span class="vault-name">🏠 Hogar (20%) ▲</span>
-                <span class="vault-val">$1.60</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="section-title">📈 Módulo de Trading</div>
-        <div class="trading-row"><span>Trader:</span> <span class="trading-val">Eliécer</span></div>
-        <div class="trading-row"><span>Capital Inicial:</span> <span class="trading-val">$8.00</span></div>
-        <div class="trading-row"><span>Capital Actual:</span> <span class="trading-val text-green">$15.00 ▲</span></div>
-        <div class="trading-row"><span>Efectividad:</span> <span class="trading-val">87.5% de éxito</span></div>
-        <div class="trading-row"><span>Tendencia Activo:</span> <span class="trading-val text-green">▲ Alcista (En alza)</span></div>
-    </div>
-
-    <div class="section">
-        <div class="section-title">🤖 Control de Actualización AI</div>
-        <div style="font-size: 11px; color: #94a3b8;">La IA gestiona los permisos del sistema operativo y los parches de versión.</div>
-        <button class="btn-blue">Buscar Actualización (v3.2)</button>
-    </div>
-
-</body>
-</html>
-
